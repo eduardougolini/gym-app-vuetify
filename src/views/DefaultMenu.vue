@@ -13,32 +13,34 @@
             <p class="subheading font-weight-light text-md-center text-sm-center text-xs-center mt-0 mb-0">Você está a 3 dias sem treinar</p>
         </div>
         <v-tabs
-            slot="extension"
-            v-model="model"
             grow
             color="primary"
             slider-color="secondary"
+            v-model="selectedTab"
         >
             <v-tab v-for="tab in tabs">
-            <v-icon>{{ tab.icon }}</v-icon>
+                <v-icon>{{ tab.icon }}</v-icon>
             </v-tab>
         </v-tabs>
 
-        <v-tabs-items v-model="model">
+        <v-tabs-items>
             <v-tab-item
-                v-for="i in 3"
-                :id="`tab-${i}`"
-                :key="i"
+                v-for="tabItem in tabItems"
             >
-                <v-card flat>
-                    <v-card-text v-text="text"></v-card-text>
-                </v-card>
+            <routines-component v-if="selectedTab == 0" />
+            <graphics-component v-else-if="selectedTab == 1" />
+            <nutrition-component v-else-if="selectedTab == 2" />
+            
             </v-tab-item>
         </v-tabs-items>
     </div>
 </template>
 
 <script>
+    import RoutinesComponent from '@/components/RoutinesComponent'
+    import GraphicsComponent from '@/components/GraphicsComponent'
+    import NutritionComponent from '@/components/NutritionComponent'
+
     export default {
         computed: {
             cssProps () {
@@ -47,17 +49,28 @@
                 }
             }
         },
+        components: {
+            RoutinesComponent,
+            GraphicsComponent,
+            NutritionComponent
+        },
         data() {
             return {
+                selectedTab: 'routines-component',
                 tabs: [
                     {
-                        icon: 'fas fa-dumbbell'    
+                        icon: 'fas fa-dumbbell'   
                     },
                     {
                         icon: 'fas fa-chart-pie'    
                     },
                     {
                         icon: 'fas fa-utensils'    
+                    }
+                ],
+                tabItems: [
+                    {
+                        component: 'routines-component'
                     }
                 ]
             }
