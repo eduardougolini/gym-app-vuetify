@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
     "@fortawesome/fontawesome-free": "^5.2.0",
+    "axios": "^0.18.0",
     "roboto-fontface": "*",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",

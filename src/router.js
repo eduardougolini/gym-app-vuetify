@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import DefaultMenu from './views/DefaultMenu.vue'
+import RegisterUser from './views/RegisterUser.vue'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/default-menu',
       name: 'default-menu',
       component: DefaultMenu
+    },
+    {
+      path: '/register-user',
+      name: 'register-user',
+      component: RegisterUser
     },
     {
       path: '/about',
