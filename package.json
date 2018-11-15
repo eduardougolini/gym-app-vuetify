@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-free": "^5.2.0",
     "axios": "^0.18.0",
     "roboto-fontface": "*",
+    "sweetalert2": "^7.29.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuetify": "^1.2.0",

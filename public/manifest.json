@@ -1,0 +1,12 @@
+{
+    "name": "Aplicativos de academias",
+    "short_name": "App de academias",
+    "description": "Aplicativo para controle de treinos",
+    "start_url": "/#/login",
+    "display": "standalone",
+    "icons": [{
+      "src": "../logo.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }]
+  }

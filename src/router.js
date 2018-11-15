@@ -4,6 +4,9 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import DefaultMenu from './views/DefaultMenu.vue'
 import RegisterUser from './views/RegisterUser.vue'
+import AddMeal from './views/AddMeal.vue'
+import RoutineInfo from './views/RoutineInfo.vue'
+import GraphicsView from  './views/GraphicsView.vue'
 
 Vue.use(Router)
 
@@ -28,6 +31,21 @@ export default new Router({
       path: '/register-user',
       name: 'register-user',
       component: RegisterUser
+    },
+    {
+      path: '/add-meal',
+      name: 'add-meal',
+      component: AddMeal
+    },
+    {
+      path: '/routine-info',
+      name: 'routine-info',
+      component: RoutineInfo
+    },
+    {
+      path: '/graphics-view',
+      name: 'graphics-view',
+      component: GraphicsView
     },
     {
       path: '/about',
