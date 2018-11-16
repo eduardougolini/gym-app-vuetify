@@ -1,7 +1,10 @@
 <template>
     <v-layout>
         <v-flex xs3 sm3 class="ml-4 mt-3">
-            <v-card class="elevation-12 mb-0">
+            <v-card 
+                class="elevation-12 mb-0"
+                @click.native="goToRoutine"
+            >
                 <v-card-title class="pb-0 pt-2">
                 <div>
                     <span class="subheading text-xs-center">Rotina 1</span>
@@ -14,7 +17,10 @@
                 <v-progress-linear class="mt-0" v-model="valueDeterminate"></v-progress-linear>
         </v-flex>
         <v-flex xs3 sm3 class="ml-4 mt-3">
-            <v-card class="elevation-12 mb-0">
+            <v-card 
+                class="elevation-12 mb-0"
+                @click.native="goToRoutine"
+            >
                 <v-card-title class="pb-0 pt-2">
                 <div>
                     <span class="subheading text-xs-center">Rotina 2</span>
@@ -27,7 +33,10 @@
                 <v-progress-linear class="mt-0" v-model="valueDeterminate2"></v-progress-linear>
         </v-flex>
         <v-flex xs3 sm3 class="ml-4 mt-3">
-            <v-card class="elevation-12 mb-0">
+            <v-card 
+                class="elevation-12 mb-0"
+                @click.native="goToRoutine"
+            >
                 <v-card-title class="pb-0 pt-2">
                 <div>
                     <span class="subheading text-xs-center">Rotina 3</span>
@@ -53,6 +62,11 @@
                 valueDeterminate: 30,
                 valueDeterminate2: 70,
                 valueDeterminate3: 45
+            }
+        },
+        methods: {
+            goToRoutine() {
+                this.$router.push('/routine-info')
             }
         }
     }

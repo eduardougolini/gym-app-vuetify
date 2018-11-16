@@ -1,7 +1,33 @@
 <template>
     <div>
         <div class="pb-2" :style="cssProps">
-            <v-toolbar-side-icon></v-toolbar-side-icon>
+            <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+            <v-navigation-drawer
+                persistent
+                :mini-variant="false"
+                :clipped="false"
+                v-model="drawer"
+                enable-resize-watcher
+                fixed
+                app
+                >
+                <v-list dense class="pt-0">
+                <v-list-tile
+                    @click=""
+                    :to="'settings'"
+                    class="pt-3 pb-3"
+                >
+                    <v-list-tile-action>
+                    <v-icon>fas fa-sliders-h</v-icon>
+                    </v-list-tile-action>
+
+                    <v-list-tile-content>
+                    <v-list-tile-title>Configurações</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-divider></v-divider>
+                </v-list>
+            </v-navigation-drawer>
             <v-flex
                 align-center
                 justify-center
@@ -56,6 +82,7 @@
         },
         data() {
             return {
+                drawer: false,
                 userImage: require('@/assets/user.png'),
                 selectedTab: 'routines-component',
                 tabs: [

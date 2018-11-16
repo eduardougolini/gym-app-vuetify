@@ -7,6 +7,7 @@ import RegisterUser from './views/RegisterUser.vue'
 import AddMeal from './views/AddMeal.vue'
 import RoutineInfo from './views/RoutineInfo.vue'
 import GraphicsView from  './views/GraphicsView.vue'
+import Settings from  './views/Settings.vue'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/graphics-view',
       name: 'graphics-view',
       component: GraphicsView
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings
     },
     {
       path: '/about',

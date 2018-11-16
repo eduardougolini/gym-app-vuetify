@@ -1,7 +1,9 @@
 <template>
     <v-layout>
         <v-flex xs5 sm5 class="ml-4 mt-3">
-            <v-card class="elevation-12 pb-5 mb-5">
+            <v-card
+                @click.native="goToGraphic"
+                class="elevation-12 pb-5 mb-5">
                 <v-card-title>
                 <div class="pb-3">
                     <span class="subheading text-xs-center">Peso</span>
@@ -13,7 +15,9 @@
             </v-card>
         </v-flex>
         <v-flex xs5 sm5 class="ml-4 mt-3">
-            <v-card class="elevation-12 pb-5 mb-5">
+            <v-card 
+                @click.native="goToGraphic"
+                class="elevation-12 pb-5 mb-5">
                 <v-card-title>
                 <div class="pb-3">
                     <span class="subheading text-xs-center">Força</span>
@@ -32,6 +36,11 @@
         name: 'GraphicsComponent',
         data() {
             return {
+            }
+        },
+        methods: {
+            goToGraphic() {
+                this.$router.push('/graphics-view')
             }
         }
     }

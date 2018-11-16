@@ -1,5 +1,6 @@
 <template>
     <v-app>
+        <go-back-button />
         <v-list subheader>
         <v-subheader>Exercícios</v-subheader>
         <v-list-tile
@@ -26,17 +27,21 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import GoBackButton from '@/components/GoBackButtonComponent';
 
 export default {
     data: () => ({
         items: [
-          { active: true, title: 'Supino reto', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-          { active: true, title: 'Supino inclinado', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
+          { active: false, title: 'Supino reto', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
+          { active: false, title: 'Supino inclinado', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
           { active: false, title: 'Peck Deck', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
           { active: false, title: 'Cross Over', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
         ]
     }),
+    components: {
+        GoBackButton
+    },
     methods: {
         doExercise(item) {
             item.active = ! item.active;
@@ -50,7 +55,7 @@ export default {
                 <label class="swal2-label" for="reps">Repetições</label><input id="reps" class="swal2-input" type="number"><br />
                 <label class="swal2-label" for="weight">Carga (kg)</label><input id="weight" class="swal2-input" type="number"><br />
                 `,
-                type: 'warning',
+                type: 'info',
                 showCancelButton: true,
                 confirmButtonText: 'Ok',
                 cancelButtonText: 'Cancelar'
@@ -68,7 +73,7 @@ export default {
     .swal2-container {
         font-family: Roboto,sans-serif
     }
-    
+
     .swal2-label {
         width: 40%;
         display: inline-block;

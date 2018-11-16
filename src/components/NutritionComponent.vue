@@ -18,6 +18,7 @@
                             justify-center
                             layout
                             text-xs-center
+                            @click="goToAddMeal"
                             class="mt-3 mb-5 pt-0 pb-0">
                         <v-icon color="primary">fas fa-plus-circle</v-icon>
                         <p class="subheading font-weight-light text-md-center text-sm-center text-xs-center ml-1 mt-0 mb-0">Adicionar refeição</p>
@@ -37,6 +38,11 @@
                 carbs: 70,
                 proteins: 45,
                 fats: 80
+            }
+        },
+        methods: {
+            goToAddMeal() {
+                this.$router.push('/add-meal')
             }
         }
     }

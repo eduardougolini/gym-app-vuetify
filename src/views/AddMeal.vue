@@ -1,5 +1,6 @@
 <template>
     <v-app>
+        <go-back-button-component />
         <v-content>
             <v-container fluid fill-height>
                 <v-layout align-center justify-center>
@@ -45,6 +46,9 @@
 </template>
 
 <script>
+
+    import GoBackButtonComponent from '@/components/GoBackButtonComponent'
+
     export default {
         data: () => ({
             items: [
@@ -56,6 +60,9 @@
             carbs: '',
             proteins: '',
             fats: ''
-        })
+        }),
+        components: {
+            GoBackButtonComponent
+        }
     }
 </script>
