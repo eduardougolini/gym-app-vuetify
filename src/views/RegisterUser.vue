@@ -1,5 +1,6 @@
 <template>
     <v-app>
+      <go-back-button />
         <v-content>
             <v-container fluid fill-height>
                 <v-layout align-center justify-center>
@@ -83,6 +84,7 @@
 
 <script>
 import axios from 'axios'
+import GoBackButton from '@/components/GoBackButtonComponent';
 
   export default {
     data: () => ({
@@ -111,6 +113,9 @@ import axios from 'axios'
       ],
       menu: false
     }),
+    components: {
+      GoBackButton
+    },
     watch: {
       menu (val) {
         val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
