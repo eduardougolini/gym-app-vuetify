@@ -34,7 +34,7 @@
                 layout
                 text-xs-center
                 class="mb-2">
-                <v-img :src="userImage" aspect-ratio="2" max-height="200px" max-width="200px" contain></v-img>
+                <v-img v-if="! getUserData.userImage" :src="userImage" aspect-ratio="2" max-height="200px" max-width="200px" contain></v-img>
             </v-flex>
             <p class="subheading font-weight-light text-md-center text-sm-center text-xs-center mt-0 mb-0">Você está a 3 dias sem treinar</p>
         </div>
@@ -66,6 +66,7 @@
     import RoutinesComponent from '@/components/RoutinesComponent'
     import GraphicsComponent from '@/components/GraphicsComponent'
     import NutritionComponent from '@/components/NutritionComponent'
+    import { mapActions, mapGetters } from 'vuex';
 
     export default {
         computed: {
@@ -73,7 +74,10 @@
                 return {
                     'background-color': this.$vuetify.theme.primary
                 }
-            }
+            },
+            ...mapGetters('Authentication', [
+                'getUserData'
+            ])
         },
         components: {
             RoutinesComponent,

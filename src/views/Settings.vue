@@ -23,6 +23,7 @@
                             <div class="text-xs-center">
                                 <v-btn
                                 color="primary"
+                                @click="save"
                                 >
                                 Atualizar informações
                                 </v-btn>
@@ -38,6 +39,7 @@
 <script>
 
     import GoBackButtonComponent from '@/components/GoBackButtonComponent'
+    import Swal from 'sweetalert2';
 
     export default {
         data: () => ({
@@ -49,6 +51,18 @@
         methods: {
             uploadImage() {
                 document.getElementById('imageUploader').click();
+            },
+            save() {
+                Swal({
+                    title: 'Sucesso',
+                    text: 'Seus dados foram atualizados com sucesso',
+                    type: 'success',
+                    confirmButtonText: 'Ok',
+                }).then((result) => {
+                    if (result.value) {
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    }
+                })
             }
         }
     }

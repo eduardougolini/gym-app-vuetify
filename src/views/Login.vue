@@ -18,7 +18,7 @@
               <v-card-text class="mt-0 mb-0 pb-0">
                 <v-form>
                   <v-text-field 
-                    v-model="email" 
+                    v-model="login.email" 
                     :rules="emailRules"
                     prepend-icon="fas fa-user" 
                     name="login" 
@@ -27,7 +27,7 @@
                     required>
                   </v-text-field>
                   <v-text-field 
-                    v-model="password" 
+                    v-model="login.password" 
                     id="password" 
                     prepend-icon="fas fa-lock" 
                     name="password" 
@@ -48,7 +48,7 @@
                   layout
                   text-xs-center
                   class="mt-3 mb-2 pt-0 pb-0">
-                  <v-btn @click="login" color="primary">Entrar</v-btn>
+                  <v-btn @click="loginAction(login)" color="primary">Entrar</v-btn>
                 </v-flex>
               </v-card-actions>
               <v-card-actions class="mt-0 mb-0 pt-0 pb-0">
@@ -74,7 +74,7 @@
         </v-layout>
       </v-container>
     </v-content>
-          <v-footer>
+          <v-footer color="white">
             <v-flex
                   align-center
                   justify-center
@@ -90,31 +90,26 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import { mapActions, mapGetters } from 'vuex';
 
   export default {
     data: () => ({
-      email: '',
+      login: {
+        email: '',
+        password: ''
+      },
       emailRules: [
         v => !!v || 'Campo obrigatório',
         v => /.+@.+/.test(v) || 'E-mail precisa ser válido'
-      ],
-      password: ''
+      ]
     }),
     methods: {
+      ...mapActions('Authentication', [
+          'loginAction'
+      ]),
       redirect() {
         this.$router.push('/register-user')
-      },
-      login() {
-        axios.post('http://localhost:3000/login', {
-            email: this.email,
-            password: this.password
-          }).then(() => {
-            this.$router.push('/default-menu')
-          }).catch(() => {
-            this.$router.push('/default-menu')
-          })
-        }
+      }
     }
   }
 </script>
