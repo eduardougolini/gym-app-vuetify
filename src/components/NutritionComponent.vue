@@ -38,28 +38,45 @@
         name: 'NutritionComponent',
         data() {
             return {
-                remainingCalories: 2510,
+                tmb: 0,
+                remainingCalories: 0,
                 carbs: 70,
                 proteins: 45,
                 fats: 80
             }
         },
         mounted() {
-            this.loadMeals();
+            this.loadTmb();
         },
         methods: {
             goToAddMeal() {
                 this.$router.push('/add-meal')
             },
+            loadTmb() {
+                let userId = this.$store.getters['Authentication/getUserData']._id;
+
+                axios.get(
+                    `http://localhost:3000/getTmb?userId=${userId}`
+                ).then(({data}) => {
+                    this.tmb = this.remainingCalories = data.tmb;
+                    this.loadMeals();
+                }).catch((e) => {
+                    console.log(e)
+                })
+            },
             loadMeals() {
                 let date = new Date();
                 let nowDate = `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDay()}`;
+                let userId = this.$store.getters['Authentication/getUserData']._id;
 
-                axios.get('http://localhost:3000/getMeals', {
-                    user: this.$store.getters['Authentication/getUserData']._id,
-                    date: nowDate
-                }).then(({data}) => {
-                    console.log(data);
+                axios.get(
+                    `http://localhost:3000/getMeals?user=${userId}&date=${nowDate}`
+                ).then(({data}) => {
+                    let ingestedCalories = data.reduce((prevVal, element) => {
+                        return prevVal + (element.proteins * 4) + (element.carbs * 4) + (element.fats * 9);
+                    }, 0);
+                    
+                    this.remainingCalories = this.tmb - ingestedCalories;
                 })
             }
         }
