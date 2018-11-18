@@ -48,6 +48,7 @@
 <script>
 
     import GoBackButtonComponent from '@/components/GoBackButtonComponent'
+    import axios from 'axios';
 
     export default {
         data: () => ({
@@ -59,7 +60,7 @@
             ],
             carbs: '',
             proteins: '',
-            fats: ''
+            fats: '',
         }),
         components: {
             GoBackButtonComponent

@@ -32,6 +32,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         name: 'NutritionComponent',
         data() {
@@ -42,9 +44,23 @@
                 fats: 80
             }
         },
+        mounted() {
+            this.loadMeals();
+        },
         methods: {
             goToAddMeal() {
                 this.$router.push('/add-meal')
+            },
+            loadMeals() {
+                let date = new Date();
+                let nowDate = `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDay()}`;
+
+                axios.get('http://localhost:3000/getMeals', {
+                    user: this.$store.getters['Authentication/getUserData']._id,
+                    date: nowDate
+                }).then(({data}) => {
+                    console.log(data);
+                })
             }
         }
     }
