@@ -7,11 +7,11 @@
                         <br>
                         <span class="subheading">Calorias restantes: {{ remainingCalories }}</span><br><br><br>
                         <span class="subheading mt-1">Carboidratos</span><br>
-                        <v-progress-linear class="mt-1" v-model="carbs"></v-progress-linear><br>
+                        <v-progress-linear :color="exceededCarbs" class="mt-1" v-model="carbs"></v-progress-linear><br>
                         <span class="subheading">Proteínas</span><br>
-                        <v-progress-linear class="mt-1" v-model="proteins"></v-progress-linear><br>
+                        <v-progress-linear :color="exceededProteins" class="mt-1" v-model="proteins"></v-progress-linear><br>
                         <span class="subheading">Gorduras</span><br>
-                        <v-progress-linear class="mt-1" v-model="fats"></v-progress-linear><br>
+                        <v-progress-linear :color="exceededFats" class="mt-1" v-model="fats"></v-progress-linear><br>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -40,9 +40,15 @@
             return {
                 tmb: 0,
                 remainingCalories: 0,
-                carbs: 70,
-                proteins: 45,
-                fats: 80
+                carbs: 0,
+                neededCarbs: 0,
+                exceededCarbs: 'primary',
+                proteins: 0,
+                neededProteins: 0,
+                exceededProteins: 'primary',
+                fats: 0,
+                neededFats: 0,
+                exceededFats: 'primary'
             }
         },
         mounted() {
@@ -59,10 +65,16 @@
                     `http://localhost:3000/getTmb?userId=${userId}`
                 ).then(({data}) => {
                     this.tmb = this.remainingCalories = data.tmb;
+                    this.calculateNeededMacros()
                     this.loadMeals();
                 }).catch((e) => {
                     console.log(e)
                 })
+            },
+            calculateNeededMacros() {
+                this.neededProteins = this.$store.getters['Authentication/getUserData'].weight * 2;
+                this.neededFats = this.$store.getters['Authentication/getUserData'].weight;
+                this.neededCarbs = this.tmb - (this.neededProteins * 4 + this.neededFats * 9);
             },
             loadMeals() {
                 let date = new Date();
@@ -75,6 +87,35 @@
                     let ingestedCalories = data.reduce((prevVal, element) => {
                         return prevVal + (element.proteins * 4) + (element.carbs * 4) + (element.fats * 9);
                     }, 0);
+                    
+                    let ingestedFats = data.reduce((prevVal, element) => {
+                        return prevVal + element.fats;
+                    }, 0);
+                    
+                    this.fats = (100 / this.neededFats) * ingestedFats
+
+                    let ingestedProteins = data.reduce((prevVal, element) => {
+                        return prevVal + element.proteins;
+                    }, 0);
+                    this.proteins = (100 / this.neededProteins) * ingestedProteins
+
+                    let ingestedCarbs = data.reduce((prevVal, element) => {
+                        return prevVal + element.carbs;
+                    }, 0);
+                    console.log(this.neededCarbs)
+                    this.carbs = (100 / this.neededCarbs) * ingestedCarbs
+
+                    if (ingestedFats > this.neededFats) {
+                        this.exceededFats = 'error';
+                    }
+
+                    if (ingestedCarbs > this.neededCarbs) {
+                        this.exceededCarbs = 'error';
+                    }
+
+                    if (ingestedProteins > this.neededProteins) {
+                        this.exceededProteins = 'error';
+                    }
                     
                     this.remainingCalories = this.tmb - ingestedCalories;
                 })
