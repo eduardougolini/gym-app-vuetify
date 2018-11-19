@@ -1,72 +1,50 @@
 <template>
     <v-layout>
-        <v-flex xs3 sm3 class="ml-4 mt-3">
+        <v-flex v-for="routine in routines" xs3 sm3 class="ml-4 mt-3">
             <v-card 
                 class="elevation-12 mb-0"
-                @click.native="goToRoutine"
+                @click.native="goToRoutine(routine._id)"
             >
                 <v-card-title class="pb-0 pt-2">
                 <div>
-                    <span class="subheading text-xs-center">Rotina 1</span>
+                    <span class="subheading text-xs-center">{{ routine.name }}</span>
                 </div>
                 </v-card-title>
                 <v-content class="mt-2" style="text-align: center">
-                    <v-img :src="firstRoutineImage"></v-img>
+                    <v-img :src="routine.routineImage"></v-img>
                 </v-content>
             </v-card>
-                <v-progress-linear class="mt-0" v-model="valueDeterminate"></v-progress-linear>
-        </v-flex>
-        <v-flex xs3 sm3 class="ml-4 mt-3">
-            <v-card 
-                class="elevation-12 mb-0"
-                @click.native="goToRoutine"
-            >
-                <v-card-title class="pb-0 pt-2">
-                <div>
-                    <span class="subheading text-xs-center">Rotina 2</span>
-                </div>
-                </v-card-title>
-                <v-content class="mt-2" style="text-align: center">
-                    <v-img :src="secondRoutineImage"></v-img>
-                </v-content>
-            </v-card>
-                <v-progress-linear class="mt-0" v-model="valueDeterminate2"></v-progress-linear>
-        </v-flex>
-        <v-flex xs3 sm3 class="ml-4 mt-3">
-            <v-card 
-                class="elevation-12 mb-0"
-                @click.native="goToRoutine"
-            >
-                <v-card-title class="pb-0 pt-2">
-                <div>
-                    <span class="subheading text-xs-center">Rotina 3</span>
-                </div>
-                </v-card-title>
-                <v-content class="mt-2" style="text-align: center">
-                    <v-img :src="thirdRoutineImage"></v-img>
-                </v-content>
-            </v-card>
-                <v-progress-linear class="mt-0" v-model="valueDeterminate2"></v-progress-linear>
+                <v-progress-linear class="mt-0" v-model="progressValue"></v-progress-linear>
         </v-flex>
     </v-layout>
 </template>
 
 <script>
+
+    import axios from 'axios';
+
     export default {
         name: 'RoutinesComponent',
         data() {
             return {
-                firstRoutineImage: require('@/assets/arm-routine.jpg'),
-                secondRoutineImage: require('@/assets/leg-routine.jpg'),
-                thirdRoutineImage: require('@/assets/leg-2-routine.jpg'),
-                valueDeterminate: 30,
-                valueDeterminate2: 70,
-                valueDeterminate3: 45
+                routines: [],
+                progressValue: 100
             }
         },
+        mounted() {
+            let user = this.$store.getters['Authentication/getUserData']._id;
+
+            axios.get(
+                `http://academia.oincriveleduardo.com.br:3000/getUserRoutines?user=${user}`
+            ).then(({data}) => {
+                this.routines = data
+            }).catch((e) => {
+                console.log(e);
+            });
+        },
         methods: {
-            goToRoutine() {
-                this.$router.push('/routine-info')
+            goToRoutine(id) {
+                this.$router.push(`/routine-info/${id}`)
             }
         }
     }

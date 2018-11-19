@@ -102,7 +102,7 @@
                     let ingestedCarbs = data.reduce((prevVal, element) => {
                         return prevVal + element.carbs;
                     }, 0);
-                    console.log(this.neededCarbs)
+                    
                     this.carbs = (100 / this.neededCarbs) * ingestedCarbs
 
                     if (ingestedFats > this.neededFats) {

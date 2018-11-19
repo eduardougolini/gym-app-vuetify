@@ -5,21 +5,21 @@
         <v-subheader>Exercícios</v-subheader>
         <v-list-tile
             v-for="item in items"
-            :key="item.title"
+            :key="item.name"
             avatar
             @click=""
         >
             <v-list-tile-avatar>
-            <img :src="item.avatar">
+            <img :src="item.exerciseImage">
             </v-list-tile-avatar>
 
             <v-list-tile-content @click="editExerciseInfo">
-            <v-list-tile-title v-html="item.title"></v-list-tile-title>
+            <v-list-tile-title v-html="item.name"></v-list-tile-title>
             <v-list-tile-content v-html="item.description"></v-list-tile-content>
             </v-list-tile-content>
 
             <v-list-tile-action>
-            <v-icon @click="doExercise(item)" :color="item.active ? 'teal' : 'grey'">fas fa-check-circle</v-icon>
+            <v-icon @click="doExercise(item)" :color="item.alreadyTrained ? 'teal' : 'grey'">fas fa-check-circle</v-icon>
             </v-list-tile-action>
         </v-list-tile>
         </v-list>
@@ -29,18 +29,27 @@
 <script>
 import Swal from 'sweetalert2';
 import GoBackButton from '@/components/GoBackButtonComponent';
+import axios from 'axios';
 
 export default {
     data: () => ({
-        items: [
-          { active: false, title: 'Supino reto', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-          { active: false, title: 'Supino inclinado', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-          { active: false, title: 'Peck Deck', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-          { active: false, title: 'Cross Over', description: 'asdfasdasdas asdd adsa sdas', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
-        ]
+        items: []
     }),
+    props: [
+        'id'
+    ],
     components: {
         GoBackButton
+    },
+    mounted() {
+        axios.get(
+            `http://academia.oincriveleduardo.com.br:3000/getRoutineExercises?routine=${this.$props['id']}`
+        ).then(({data}) => {
+            console.log(data)
+            this.items = data
+        }).catch((e) => {
+            console.log(e);
+        });
     },
     methods: {
         doExercise(item) {

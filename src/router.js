@@ -39,9 +39,10 @@ export default new Router({
       component: AddMeal
     },
     {
-      path: '/routine-info',
+      path: '/routine-info/:id',
       name: 'routine-info',
-      component: RoutineInfo
+      component: RoutineInfo,
+      props: true
     },
     {
       path: '/graphics-view',
