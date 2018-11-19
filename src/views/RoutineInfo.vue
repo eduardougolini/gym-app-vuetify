@@ -1,28 +1,30 @@
 <template>
     <v-app>
         <go-back-button />
-        <v-list subheader>
-        <v-subheader>Exercícios</v-subheader>
-        <v-list-tile
+        <v-card 
             v-for="item in items"
-            :key="item.name"
-            avatar
-            @click=""
-        >
-            <v-list-tile-avatar>
-            <img :src="item.exerciseImage">
-            </v-list-tile-avatar>
+            :key="item.name">
+            <v-img
+            :src="item.exerciseImage"
+            aspect-ratio="2.75"
+            ></v-img>
 
-            <v-list-tile-content @click="editExerciseInfo">
-            <v-list-tile-title v-html="item.name"></v-list-tile-title>
-            <v-list-tile-content v-html="item.description"></v-list-tile-content>
-            </v-list-tile-content>
+            <v-card-title primary-title>
+            <div>
+                <h3 class="headline mb-0">{{ item.name }}</h3>
+                <div>{{ item.description }}</div>
+            </div>
+            </v-card-title>
 
-            <v-list-tile-action>
-            <v-icon @click="doExercise(item)" :color="item.alreadyTrained ? 'teal' : 'grey'">fas fa-check-circle</v-icon>
-            </v-list-tile-action>
-        </v-list-tile>
-        </v-list>
+            <v-card-actions style="display: flex; justify-content: flex-end;">
+                <div class="text-xs-center">
+                    <v-btn class="white--text" @click="doExercise(item)" :color="item.alreadyTrained ? 'teal' : 'grey'">
+                        Terminei!
+                        <v-icon right>fas fa-check-circle</v-icon> 
+                    </v-btn>
+                </div>
+            </v-card-actions>
+        </v-card>
     </v-app>
 </template>
 
@@ -53,7 +55,7 @@ export default {
     },
     methods: {
         doExercise(item) {
-            item.active = ! item.active;
+            item.alreadyTrained = ! item.alreadyTrained;
         },
         editExerciseInfo() {
             Swal({

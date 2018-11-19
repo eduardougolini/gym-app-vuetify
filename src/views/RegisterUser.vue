@@ -67,7 +67,6 @@
                             <div class="text-xs-center">
                                 <v-btn
                                 color="primary"
-                                right
                                 :disabled="!valid"
                                 @click="submit"
                                 >
