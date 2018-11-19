@@ -125,7 +125,7 @@ import GoBackButton from '@/components/GoBackButtonComponent';
       submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
-          axios.post('http://localhost:3000/register', {
+          axios.post('http://academia.oincriveleduardo.com.br:3000/register', {
                 name: this.name,
                 email: this.email,
                 password: this.password,

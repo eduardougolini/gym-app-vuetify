@@ -4,7 +4,7 @@ import router from '../../../router';
 
 export default {
   loginAction: ({commit}, {email, password}) => {
-    axios.post('http://localhost:3000/login', {
+    axios.post('http://academia.oincriveleduardo.com.br:3000/login', {
       email,
       password
     }).then(({data}) => {

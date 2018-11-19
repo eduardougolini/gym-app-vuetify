@@ -62,7 +62,7 @@
                 let userId = this.$store.getters['Authentication/getUserData']._id;
 
                 axios.get(
-                    `http://localhost:3000/getTmb?userId=${userId}`
+                    `http://academia.oincriveleduardo.com.br:3000/getTmb?userId=${userId}`
                 ).then(({data}) => {
                     this.tmb = this.remainingCalories = data.tmb;
                     this.calculateNeededMacros()
@@ -82,7 +82,7 @@
                 let userId = this.$store.getters['Authentication/getUserData']._id;
 
                 axios.get(
-                    `http://localhost:3000/getMeals?user=${userId}&date=${nowDate}`
+                    `http://academia.oincriveleduardo.com.br:3000/getMeals?user=${userId}&date=${nowDate}`
                 ).then(({data}) => {
                     let ingestedCalories = data.reduce((prevVal, element) => {
                         return prevVal + (element.proteins * 4) + (element.carbs * 4) + (element.fats * 9);

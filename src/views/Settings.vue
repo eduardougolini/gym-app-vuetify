@@ -40,29 +40,72 @@
 
     import GoBackButtonComponent from '@/components/GoBackButtonComponent'
     import Swal from 'sweetalert2';
+    import axios from 'axios';
 
     export default {
         data: () => ({
-            weight: ''
+            weight: 0
         }),
         components: {
             GoBackButtonComponent
+        },
+        mounted() {
+            this.weight = this.$store.getters['Authentication/getUserData'].weight;
         },
         methods: {
             uploadImage() {
                 document.getElementById('imageUploader').click();
             },
             save() {
-                Swal({
-                    title: 'Sucesso',
-                    text: 'Seus dados foram atualizados com sucesso',
-                    type: 'success',
-                    confirmButtonText: 'Ok',
-                }).then((result) => {
-                    if (result.value) {
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    }
-                })
+                let file = document.getElementById('imageUploader').files[0];
+                let userImage = null; 
+                
+                if (file) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+
+                    var that = this;
+
+                    reader.onload = function(e) {
+                        that.updateInfo(e.target.result);
+                    };
+                } else {
+                    this.updateInfo();
+                }
+
+                
+
+            },
+            updateInfo(userImage = null) {
+                let userId = this.$store.getters['Authentication/getUserData']._id;
+                let userData = this.$store.getters['Authentication/getUserData'];
+                userImage = userImage ? userImage : this.$store.getters['Authentication/getUserData'].userImage;
+
+                Swal.showLoading() 
+
+                axios.put('http://academia.oincriveleduardo.com.br:3000/updateUserInfo', {
+                    userId,
+                    userImage,
+                    weight: this.weight
+                }).then(({data}) => {
+                    userData.weight = this.weight;
+                    userData.userImage = userImage;
+
+                    this.$store.commit('Authentication/SET_USER_DATA', userData );
+                    
+                    Swal({
+                        title: 'Sucesso',
+                        text: 'Seus dados foram atualizados com sucesso',
+                        type: 'success',
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        if (result.value) {
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        }
+                    })
+                }).catch(e => {
+                    console.log(e)
+                });
             }
         }
     }

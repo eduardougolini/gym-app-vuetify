@@ -74,7 +74,7 @@
                 let date = new Date();
                 let nowDate = `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDay()}`;
 
-                axios.post('http://localhost:3000/addMeal', {
+                axios.post('http://academia.oincriveleduardo.com.br:3000/addMeal', {
                     user: this.$store.getters['Authentication/getUserData']._id,
                     date: nowDate,
                     fats: this.fats,
@@ -82,7 +82,7 @@
                     proteins: this.proteins,
                     type: this.type
                 }).then(({data}) => {
-                    console.log(data);
+                    this.$router.push('default-menu');
                 }).catch((e) => {
                     console.log(e)
                 })

@@ -74,7 +74,7 @@
         </v-layout>
       </v-container>
     </v-content>
-          <v-footer color="white">
+          <v-footer color="rgb(250, 250, 250)">
             <v-flex
                   align-center
                   justify-center
